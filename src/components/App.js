@@ -35,20 +35,20 @@ export default function App() {
       <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} onClose={closeAllPopups} />
       <Footer />
       <PopupWithForm name={'profile'} title={'Редактировать профиль'} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-        <form className="popup__form popup__form-profile" name='profile-form' novalidate>
+        <form className="popup__form popup__form-profile" name='profile-form' noValidate>
           <fieldset className="popup__form-set">
             <input type="text" className="popup__input popup__input_type_name" name="name" placeholder="Введите имя"
-              id="popup__name" required minlength="2" maxlength="40" />
+              id="popup__name" required minLength="2" maxLength="40" />
             <span className="popup__input-error popup__name-error"></span>
             <input type="text" className="popup__input popup__input_type_description" name="description"
-              placeholder="Введите описание" id="popup__description" required minlength="2" maxlength="200" />
+              placeholder="Введите описание" id="popup__description" required minLength="2" maxLength="200" />
             <span className="popup__input-error popup__description-error"></span>
             <button type="submit" className="popup__submit-popup-btn">Сохранить</button>
           </fieldset>
         </form>
       </PopupWithForm>
       <PopupWithForm name={'avatar'} title={'Обновить аватар'} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-        <form className="popup__form popup__form-avatar" name="profile-form" novalidate>
+        <form className="popup__form popup__form-avatar" name="profile-form" noValidate>
           <fieldset className="popup__form-set">
             <input type="url" className="popup__input popup__input_type_avatar" name="link" placeholder="Ссылка на картинку"
               id="popup__avatar" required />
@@ -58,10 +58,10 @@ export default function App() {
         </form>
       </PopupWithForm>
       <PopupWithForm name={'card'} title={'Новое место'} isOpen={isEditAddPlacePopupOpen} onClose={closeAllPopups}>
-        <form className="popup__form popup__form-card" name="mesto-form" novalidate>
+        <form className="popup__form popup__form-card" name="mesto-form" noValidate>
           <fieldset className="popup__form-set">
             <input type="text" className="popup__input popup__input_type_img-name" name="name" placeholder="Название"
-              id="popup__img" required minlength="2" maxlength="30" />
+              id="popup__img" required minLength="2" maxLength="30" />
             <span className="popup__input-error popup__img-error"></span>
             <input type="url" className="popup__input popup__input_type_img-link" name="link"
               placeholder="Ссылка на картинку" id="popup__link" required />
