@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState } from 'react';
 import Footer from './Footer.jsx';
 import Header from './Header.jsx';
 import Main from './Main.jsx'
@@ -58,7 +58,6 @@ export default function App() {
       <PopupWithForm
         name={'profile'}
         title={'Редактировать профиль'}
-        buttonText={'Сохранить'}
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
       >
@@ -72,7 +71,6 @@ export default function App() {
       <PopupWithForm
         name={'avatar'}
         title={'Обновить аватар'}
-        buttonText={'Сохранить'}
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
@@ -83,7 +81,6 @@ export default function App() {
       <PopupWithForm
         name={'card'}
         title={'Новое место'}
-        buttonText={'Сохранить'}
         isOpen={isEditAddPlacePopupOpen}
         onClose={closeAllPopups}
       >
