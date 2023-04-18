@@ -1,29 +1,16 @@
-import { useState, useEffect } from 'react';
-import { api } from '../utils/api.js';
+import { useContext } from 'react';
 import Card from './Card.jsx';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.jsx';
+import { CardContext } from '../contexts/CardContex.jsx';
 
-export default function Main({ onEditAvatar, onEditProfile, onCardClick, onClick, onDeleteImage, onAddPlace }) {
+export default function Main({ onEditAvatar, onEditProfile, onCardClick, onCardDelete, onAddPlace, onCardLike }) {
 
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
+  const currentUser = useContext(CurrentUserContext);
+  const cards = useContext(CardContext);
 
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    api.getUserInfo()
-      .then((res) => {
-        setUserName(res.name);
-        setUserDescription(res.about);
-        setUserAvatar(res.avatar)
-      })
-      .catch((err) => console.log(err));
-    api.getCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const userName = currentUser.name;
+  const userDescription = currentUser.about;
+  const userAvatar = currentUser.avatar;
 
   return (
     <main className="content">
@@ -44,7 +31,13 @@ export default function Main({ onEditAvatar, onEditProfile, onCardClick, onClick
         <ul className="photo-grid__list">
           {
             cards.map((card) => (
-              <Card key={card._id} card={card} onCardClick={onCardClick} onDeleteImage={onDeleteImage} />
+              <Card
+                key={card._id}
+                card={card}
+                onCardClick={onCardClick}
+                onCardDelete={onCardDelete}
+                onCardLike={onCardLike}
+              />
             ))
           }
         </ul>
