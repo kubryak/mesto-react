@@ -1,33 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PopupWithForm from './PopupWithForm.jsx';
+import { useInput } from '../utils/useInput.js';
 
 export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText }) {
 
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
+  const cardName = useRef();
+  const cardLink = useRef();
+
+  const name = useInput('', { isEmpty: true, minLength: 2 });
+  const link = useInput('', { isEmpty: true, minLength: 0, isUrl: false });
+
+  const [errorMessageName, setErrorMessageName] = useState('');
+  const [errorMessageLink, setErrorMessageLink] = useState('');
+
+  useEffect(() => {
+    cardName.current.value = '';
+    cardLink.current.value = '';
+  }, [isOpen])
 
   function handleCardNameChange(e) {
-    setName(e.target.value);
+    name.onChange(e);
+    setErrorMessageName(e.target.validationMessage);
   }
 
   function handleCardLinkChange(e) {
-    setLink(e.target.value);
+    link.onChange(e);
+    setErrorMessageLink(e.target.validationMessage);
   }
 
   function handleSubmitCard(e) {
     e.preventDefault();
     onUpdateCard({
-      name: name,
-      link: link
+      name: cardName.current.value,
+      link: cardLink.current.value
     });
-    setName('');
-    setLink('');
   }
-
-  useEffect(() => {
-    setName('');
-    setLink('');
-  }, [isOpen])
 
   return (
     <PopupWithForm
@@ -37,29 +44,34 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmitCard}
+      onDisabled={!name.inputValid || !link.inputValid}
     >
       <input
         type="text"
         className="popup__input popup__input_type_img-name"
-        name="name"
+        name="formname"
+        ref={cardName}
+        value={name.value}
         placeholder="Название"
         id="popup__img"
-        value={name}
         onChange={handleCardNameChange}
+        onFocus={name.onFocus}
         required
         minLength="2"
         maxLength="30" />
-      <span className="popup__input-error popup__img-error"></span>
+      {((name.isDirty && name.isEmpty) || (name.isDirty && name.minLengthError)) && <span className="popup__input-error popup__img-error popup__input-error_active ">{errorMessageName}</span>}
       <input
         type="url"
         className="popup__input popup__input_type_img-link"
-        name="link"
+        name="formlink"
+        ref={cardLink}
+        value={link.value}
         placeholder="Ссылка на картинку"
         id="popup__link"
-        value={link}
         onChange={handleCardLinkChange}
+        onFocus={link.onFocus}
         required />
-      <span className="popup__input-error popup__link-error"></span>
+      {((link.isDirty && link.isEmpty) || (link.isDirty && link.urlError) || (link.isDirty && link.minLengthError)) && <span className="popup__input-error popup__link-error popup__input-error_active ">{errorMessageLink}</span>}
     </PopupWithForm>
   )
 }
