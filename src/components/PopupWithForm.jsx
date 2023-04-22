@@ -10,7 +10,7 @@ export default function PopupWithForm({ name, isOpen, title, onClose, buttonText
     <section className={`popup ${isOpen && ('popup_opened')}`} onMouseDown={handleClickClose} >
       <div className={`popup__container popup__container_type_${name}`}>
         <h3 className="popup__title">{`${title}`}</h3>
-        <form className="popup__form" onSubmit={onSubmit} name={`${name}-form`} noValidate>
+        <form className="popup__form" onSubmit={onSubmit} name={`${name}-form`}>
           <fieldset className="popup__form-set">
             {children}
             <button type="submit" className="popup__submit-popup-btn">{buttonText || 'Сохранить'}</button>

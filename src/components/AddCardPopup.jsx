@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm.jsx';
 
 export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText }) {
@@ -46,7 +46,8 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
         id="popup__img"
         value={name}
         onChange={handleCardNameChange}
-        required minLength="2"
+        required
+        minLength="2"
         maxLength="30" />
       <span className="popup__input-error popup__img-error"></span>
       <input
