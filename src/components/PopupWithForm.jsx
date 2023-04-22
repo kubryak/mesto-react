@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export default function PopupWithForm({ name, isOpen, title, onClose, buttonText, onSubmit, children }) {
 
   function handleClickClose(evt) {

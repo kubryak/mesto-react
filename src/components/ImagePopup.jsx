@@ -1,11 +1,5 @@
 export default function ImagePopup({ card, isOpen, onClose }) {
 
-  function handleEscClose(evt) {
-    if (evt.key === 'Escape' || evt.key === 'Escape' || evt.key === '27') {
-      onClose();
-    }
-  }
-
   function handleClickClose(evt) {
     if (evt.target.classList.contains('popup_opened')) {
       onClose();
