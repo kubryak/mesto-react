@@ -4,6 +4,8 @@ import Header from './Header.jsx';
 import Main from './Main.jsx'
 import PopupWithForm from './PopupWithForm.jsx';
 import ImagePopup from './ImagePopup.jsx';
+import EditProfilePopup from './EditProfilePopup.jsx';
+import EditAvatarPopup from './EditAvatarPopup.jsx';
 import { api } from '../utils/api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.jsx';
 import { CardContext } from '../contexts/CardContex.jsx';
@@ -50,10 +52,10 @@ export default function App() {
     setSelectedCard(card);
   }
 
-  function handleDeleteCardClick() {
-    setDeleteCardPopupOpen(true);
-  }
-  
+  // function handleDeleteCardClick() {
+  //   setDeleteCardPopupOpen(true);
+  // }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
@@ -68,6 +70,20 @@ export default function App() {
     api.deleteCard(card._id)
       .then(setCards((state) => state.filter((c) => c._id !== card._id)))
       .catch(err => console.log(err))
+  }
+
+  function handleUpdateUser(name, description) {
+    api.setUserInfo(name, description)
+      .then(res => setCurrentUser(res))
+      .catch(err => console.log(err))
+    closeAllPopups();
+  }
+
+  function handleUpdateAvatar(avatar) {
+    api.setNewAvatar(avatar)
+      .then(res => setCurrentUser(res))
+      .catch(err => console.log(err))
+    closeAllPopups();
   }
 
   function closeAllPopups() {
@@ -93,29 +109,16 @@ export default function App() {
             onCardLike={handleCardLike}
           />
           <Footer />
-          <PopupWithForm
-            name={'profile'}
-            title={'Редактировать профиль'}
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
-          >
-            <input type="text" className="popup__input popup__input_type_name" name="name" placeholder="Введите имя"
-              id="popup__name" required minLength="2" maxLength="40" />
-            <span className="popup__input-error popup__name-error"></span>
-            <input type="text" className="popup__input popup__input_type_description" name="description"
-              placeholder="Введите описание" id="popup__description" required minLength="2" maxLength="200" />
-            <span className="popup__input-error popup__description-error"></span>
-          </PopupWithForm>
-          <PopupWithForm
-            name={'avatar'}
-            title={'Обновить аватар'}
+            onUpdateUser={handleUpdateUser}
+          />
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-          >
-            <input type="url" className="popup__input popup__input_type_avatar" name="link" placeholder="Ссылка на картинку"
-              id="popup__avatar" required />
-            <span className="popup__input-error popup__avatar-error"></span>
-          </PopupWithForm>
+            onUpdateAvatar={handleUpdateAvatar}
+          />
           <PopupWithForm
             name={'card'}
             title={'Новое место'}
