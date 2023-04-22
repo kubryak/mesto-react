@@ -1,6 +1,19 @@
 export default function ImagePopup({ card, isOpen, onClose }) {
+
+  function handleEscClose(evt) {
+    if (evt.key === 'Escape' || evt.key === 'Escape' || evt.key === '27') {
+      onClose();
+    }
+  }
+
+  function handleClickClose(evt) {
+    if (evt.target.classList.contains('popup_opened')) {
+      onClose();
+    }
+  }
+
   return (
-    <section className={`popup ${isOpen && ('popup_opened')}`}>
+    <section className={`popup ${isOpen && ('popup_opened')}`} onMouseDown={handleClickClose}>
       <div className="popup__figure-container">
         <figure className="popup__figure">
           <img className="popup__image" src={card.link} alt={card.name} />

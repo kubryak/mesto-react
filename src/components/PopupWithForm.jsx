@@ -1,10 +1,6 @@
-export default function PopupWithForm({ name, isOpen, title, onClose, buttonText, onSubmit, children }) {
+import { useEffect } from "react";
 
-  function handleEscClose(evt) {
-    if (evt.key === 'Escape' || evt.key === 'Escape' || evt.key === '27') {
-      onClose();
-    }
-  }
+export default function PopupWithForm({ name, isOpen, title, onClose, buttonText, onSubmit, children }) {
 
   function handleClickClose(evt) {
     if (evt.target.classList.contains('popup_opened')) {
@@ -13,7 +9,7 @@ export default function PopupWithForm({ name, isOpen, title, onClose, buttonText
   }
 
   return (
-    <section className={`popup ${isOpen && ('popup_opened')}`} onClick={handleClickClose} onKeyDown={handleEscClose} tabIndex={-1}>
+    <section className={`popup ${isOpen && ('popup_opened')}`} onMouseDown={handleClickClose} >
       <div className={`popup__container popup__container_type_${name}`}>
         <h3 className="popup__title">{`${title}`}</h3>
         <form className={`popup__form popup__form-${name}`} onSubmit={onSubmit} name='profile-form' noValidate>

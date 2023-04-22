@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import PopupWithForm from './PopupWithForm.jsx';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.jsx';
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, buttonText }) {
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -12,7 +12,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -24,8 +24,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
   function handleSubmitProfile(e) {
     e.preventDefault();
-    onUpdateUser(name, description);
-    console.log(name, description)
+    onUpdateUser({ name: name, about: description });
   }
 
   return (
@@ -35,12 +34,30 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmitProfile}
+      buttonText={buttonText}
     >
-      <input type="text" className="popup__input popup__input_type_name" name="name" placeholder="Введите имя"
-        id="popup__name" value={name} onChange={handleNameChange} required minLength="2" maxLength="40" />
+      <input
+        type="text"
+        className="popup__input popup__input_type_name"
+        name="name" placeholder="Введите имя"
+        id="popup__name" value={name}
+        onChange={handleNameChange}
+        required
+        minLength="2"
+        maxLength="40"
+      />
       <span className="popup__input-error popup__name-error"></span>
-      <input type="text" className="popup__input popup__input_type_description" name="description"
-        placeholder="Введите описание" id="popup__description" value={description} onChange={handleDescriptionChange} required minLength="2" maxLength="200" />
+      <input
+        type="text"
+        className="popup__input popup__input_type_description"
+        name="description"
+        placeholder="Введите описание"
+        id="popup__description"
+        value={description}
+        onChange={handleDescriptionChange}
+        required minLength="2"
+        maxLength="200"
+      />
       <span className="popup__input-error popup__description-error"></span>
     </PopupWithForm>
   )
