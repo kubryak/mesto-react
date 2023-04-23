@@ -58,7 +58,6 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
         className="popup__input popup__input_type_img-name"
         name="formname"
         ref={cardName}
-        value={name.value}
         placeholder="Название"
         id="popup__img"
         onChange={handleCardNameChange}
@@ -78,7 +77,6 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
         className="popup__input popup__input_type_img-link"
         name="formlink"
         ref={cardLink}
-        value={link.value}
         placeholder="Ссылка на картинку"
         id="popup__link"
         onChange={handleCardLinkChange}
