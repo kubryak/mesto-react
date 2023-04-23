@@ -18,6 +18,13 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
     cardLink.current.value = '';
   }, [isOpen])
 
+  useEffect(() => {
+    name.setInputValid(true);
+    link.setInputValid(true);
+    setErrorMessageName('');
+    setErrorMessageLink('');
+  }, [onClose])
+
   function handleCardNameChange(e) {
     name.onChange(e);
     setErrorMessageName(e.target.validationMessage);
@@ -59,7 +66,13 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
         required
         minLength="2"
         maxLength="30" />
-      {((name.isDirty && name.isEmpty) || (name.isDirty && name.minLengthError)) && <span className="popup__input-error popup__img-error popup__input-error_active ">{errorMessageName}</span>}
+      {(
+        (name.isDirty && name.isEmpty) ||
+        (name.isDirty && name.minLengthError)) &&
+        <span className="popup__input-error popup__img-error popup__input-error_active">
+          {errorMessageName}
+        </span>
+      }
       <input
         type="url"
         className="popup__input popup__input_type_img-link"
@@ -71,7 +84,14 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
         onChange={handleCardLinkChange}
         onFocus={link.onFocus}
         required />
-      {((link.isDirty && link.isEmpty) || (link.isDirty && link.urlError) || (link.isDirty && link.minLengthError)) && <span className="popup__input-error popup__link-error popup__input-error_active ">{errorMessageLink}</span>}
+      {(
+        (link.isDirty && link.isEmpty) ||
+        (link.isDirty && link.urlError) ||
+        (link.isDirty && link.minLengthError)) &&
+        <span className="popup__input-error popup__link-error popup__input-error_active">
+          {errorMessageLink}
+        </span>
+      }
     </PopupWithForm>
   )
 }
