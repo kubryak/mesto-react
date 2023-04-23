@@ -22,10 +22,10 @@ export default function Main({ onEditAvatar, onEditProfile, onCardClick, onCardD
         </div>
         <div className="profile__profile-info">
           <h1 className="profile__profile-name">{userName}</h1>
-          <button type="button" className="profile__edit-profile-info-btn" onClick={onEditProfile}></button>
+          <button type="button" className="profile__edit-profile-info-btn" onClick={onEditProfile} />
           <p className="profile__profile-description">{userDescription}</p>
         </div>
-        <button type="button" className="profile__add-mesto-btn" onClick={onAddPlace}></button>
+        <button type="button" className="profile__add-mesto-btn" onClick={onAddPlace} />
       </section>
       <section className="photo-grid" aria-label="Фотографии, добавленные пользователем">
         <ul className="photo-grid__list">

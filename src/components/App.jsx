@@ -45,11 +45,11 @@ export default function App() {
         closeAllPopups()
       }
     }
-    document.addEventListener('keydown', close);
-    return () => {
-      document.removeEventListener('keydown', close);
-    }
-  }, [])
+    (isEditProfilePopupOpen || isEditAvatarPopupOpen || isEditAddPlacePopupOpen || isImagePopupOpen || isDeleteCardPopupOpen ?
+      document.addEventListener('keydown', close) :
+      document.addEventListener('keydown', close)
+    )
+  }, [isEditProfilePopupOpen, isEditAvatarPopupOpen, isEditAddPlacePopupOpen, isImagePopupOpen, isDeleteCardPopupOpen])
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -61,6 +61,7 @@ export default function App() {
 
   function handleAddPlaceClick() {
     setEditAddPlacePopupOpen(true);
+
   }
 
   function handleCardClick(card) {
@@ -86,44 +87,52 @@ export default function App() {
   function handleCardDelete() {
     setIsLoading(true);
     api.deleteCard(deletedCard._id)
-      .then(setCards((state) => state.filter((c) => c._id !== deletedCard._id)))
+      .then(() => {
+        setCards(cards.filter((c) => c._id !== deletedCard._id))
+        closeAllPopups();
+      })
       .catch(err => console.log(err))
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       })
   }
 
   function handleUpdateUser(name, description) {
     setIsLoading(true);
     api.setUserInfo(name, description)
-      .then(res => setCurrentUser(res))
+      .then(res => {
+        setCurrentUser(res)
+        closeAllPopups();
+      })
       .catch(err => console.log(err))
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       })
   }
 
   function handleUpdateAvatar(avatar) {
     setIsLoading(true);
     api.setNewAvatar(avatar)
-      .then(res => setCurrentUser(res))
+      .then(res => {
+        setCurrentUser(res)
+        closeAllPopups();
+      })
       .catch(err => console.log(err))
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       })
   }
 
   function handleAddCard(card) {
     setIsLoading(true);
     api.addNewCard(card)
-      .then(res => setCards([res, ...cards]))
+      .then(res => {
+        setCards([res, ...cards])
+        closeAllPopups();
+      })
       .catch(err => console.log(err))
       .finally(() => {
         setIsLoading(false);
-        closeAllPopups();
       })
   }
 
