@@ -7,7 +7,7 @@ export default function PopupWithForm({ name, isOpen, title, onClose, buttonText
   }
 
   return (
-    <section className={`popup ${isOpen && ('popup_opened')}`} onMouseDown={handleClickClose} >
+    <section className={`popup ${isOpen && ('popup_opened')}`} onMouseDown={handleClickClose}>
       <div className={`popup__container popup__container_type_${name}`}>
         <h3 className="popup__title">{`${title}`}</h3>
         <form className="popup__form" onSubmit={onSubmit} name={`${name}-form`} noValidate>

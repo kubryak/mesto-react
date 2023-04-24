@@ -45,10 +45,12 @@ export default function App() {
         closeAllPopups()
       }
     }
-    (isEditProfilePopupOpen || isEditAvatarPopupOpen || isEditAddPlacePopupOpen || isImagePopupOpen || isDeleteCardPopupOpen ?
-      document.addEventListener('keydown', close) :
+    if (isEditProfilePopupOpen || isEditAvatarPopupOpen || isEditAddPlacePopupOpen || isImagePopupOpen || isDeleteCardPopupOpen) {
       document.addEventListener('keydown', close)
-    )
+    }
+    return () => {
+      document.removeEventListener('keydown', close)
+    }
   }, [isEditProfilePopupOpen, isEditAvatarPopupOpen, isEditAddPlacePopupOpen, isImagePopupOpen, isDeleteCardPopupOpen])
 
   function handleEditAvatarClick() {
