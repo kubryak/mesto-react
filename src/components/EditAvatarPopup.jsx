@@ -14,7 +14,6 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, butto
     setErrorMessageLink('');
     setAvatarLink('');
     link.setInputValid(false);
-    console.log(link)
   }, [onClose, onUpdateAvatar])
 
   function handleAvatarLinkChange(e) {
