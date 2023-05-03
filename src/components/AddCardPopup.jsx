@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm.jsx';
 import { useInput } from '../utils/useInput.js';
 
 export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText }) {
 
-  const cardName = useRef();
-  const cardLink = useRef();
+  const [cardName, setCardName] = useState('');
+  const [cardLink, setCardLink] = useState('');
 
   const name = useInput('', { isEmpty: true, minLength: 2 });
   const link = useInput('', { isEmpty: true, minLength: 0, isUrl: false });
@@ -14,23 +14,22 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
   const [errorMessageLink, setErrorMessageLink] = useState('');
 
   useEffect(() => {
-    cardName.current.value = '';
-    cardLink.current.value = '';
-  }, [isOpen])
-
-  useEffect(() => {
-    name.setInputValid(true);
-    link.setInputValid(true);
     setErrorMessageName('');
     setErrorMessageLink('');
-  }, [onClose])
+    setCardName('');
+    setCardLink('');
+    name.setInputValid(false);
+    link.setInputValid(false);
+  }, [onClose, onUpdateCard])
 
   function handleCardNameChange(e) {
+    setCardName(e.target.value)
     name.onChange(e);
     setErrorMessageName(e.target.validationMessage);
   }
 
   function handleCardLinkChange(e) {
+    setCardLink(e.target.value)
     link.onChange(e);
     setErrorMessageLink(e.target.validationMessage);
   }
@@ -38,8 +37,8 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
   function handleSubmitCard(e) {
     e.preventDefault();
     onUpdateCard({
-      name: cardName.current.value,
-      link: cardLink.current.value
+      name: cardName,
+      link: cardLink
     });
   }
 
@@ -57,7 +56,7 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
         type="text"
         className="popup__input popup__input_type_img-name"
         name="formname"
-        ref={cardName}
+        value={cardName || ''}
         placeholder="Название"
         id="popup__img"
         onChange={handleCardNameChange}
@@ -76,7 +75,7 @@ export default function AddCardPopup({ isOpen, onClose, onUpdateCard, buttonText
         type="url"
         className="popup__input popup__input_type_img-link"
         name="formlink"
-        ref={cardLink}
+        value={cardLink || ''}
         placeholder="Ссылка на картинку"
         id="popup__link"
         onChange={handleCardLinkChange}

@@ -62,7 +62,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, button
         className="popup__input popup__input_type_name"
         name="name" placeholder="Введите имя"
         id="popup__name"
-        value={name ?? ''}
+        value={name || ''}
         onChange={handleNameChange}
         required
         minLength="2"
@@ -82,7 +82,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, button
         name="description"
         placeholder="Введите описание"
         id="popup__description"
-        value={description ?? ''}
+        value={description || ''}
         onChange={handleDescriptionChange}
         required
         minLength="2"

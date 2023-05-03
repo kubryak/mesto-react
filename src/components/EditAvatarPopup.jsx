@@ -1,16 +1,24 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { useInput } from "../utils/useInput";
 
 export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, buttonText }) {
 
-  const avatarInputRef = useRef();
+  const [avatarLink, setAvatarLink] = useState('');
 
   const link = useInput('', { isEmpty: true, minLength: 0, isUrl: false });
 
   const [errorMessageLink, setErrorMessageLink] = useState('');
 
+  useEffect(() => {
+    setErrorMessageLink('');
+    setAvatarLink('');
+    link.setInputValid(false);
+    console.log(link)
+  }, [onClose, onUpdateAvatar])
+
   function handleAvatarLinkChange(e) {
+    setAvatarLink(e.target.value)
     link.onChange(e);
     setErrorMessageLink(e.target.validationMessage);
   }
@@ -18,18 +26,11 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, butto
   function handleSubmitAvatar(e) {
     e.preventDefault();
     onUpdateAvatar({
-      avatar: avatarInputRef.current.value
+      avatar: avatarLink
     });
   }
 
-  useEffect(() => {
-    avatarInputRef.current.value = '';
-  }, [isOpen])
 
-  useEffect(() => {
-    link.setInputValid(true);
-    setErrorMessageLink('');
-  }, [onClose])
 
   return (
     <PopupWithForm
@@ -47,8 +48,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, butto
         name="avatarlink"
         placeholder="Ссылка на картинку"
         id="popup__avatar"
-        ref={avatarInputRef}
-        value={link.value}
+        value={avatarLink || ''}
         onChange={handleAvatarLinkChange}
         onFocus={link.onFocus}
         required
