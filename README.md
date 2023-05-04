@@ -17,7 +17,7 @@
 $ git clone https://github.com/kubryak/mesto-react.git
 
 # Перейти в репозиторий
-$ cd mesto
+$ cd mesto-react
 ```
 ```npm start```  
   
